@@ -28,7 +28,45 @@
       'Revolver',
       'Rope',
       'Wrench'
-  */
+ */
+
+$rooms = [
+  'Study' => [
+    'items' => ['the Candlestick']
+  ],
+  'Hall' => [
+    'items' => ['Mr. Green']
+  ],
+  'Lounge' => [
+    'items' => ['Professor Plum', 'the Rope']
+  ],
+  'Library' => [
+    'items' => ['the Wrench']
+  ],
+  'Dining Room' => [
+    'items' => []
+  ],
+  'Billard Room' => [
+    'items' => ['Mrs. White', 'the Knife']
+  ],
+  'Conservatory' => [
+    'items' => ['Miss Scarlet']
+  ],
+  'Ballroom' => [
+    'items' => ['Mrs. Peacock']
+  ],
+  'Kitchen' => [
+    'items' => ['the Lead Pipe']
+  ]
+];
+
+// Check if a room has been given
+// Check if the room is a valid room
+if (isset($_GET['room']) && isset($rooms[$_GET['room']])) {
+  $items = $rooms[$_GET['room']]['items'];
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,36 +83,23 @@
     <h1>Clue</h1>
   </header>
   <div class="items"> 
-    <p>Select a room to get a clue.</p>
+    <?php if (isset($items)) : ?>
+      <?php if (count($items)) : ?>
+      <p>You found <?php echo implode(' and ', $items); ?>.</p>
+    <?php else : ?>
+      <p>You found no items.</p>
+    <?php endif; ?>
+  <?php else : ?>
+      <p>Select a room to get a clue.</p>
+    <?php endif; ?>
   </div>
   <main class="container">
+      <?php foreach ($rooms as $room => $items) : ?>
       <div class="room">
-        <a href="?room=Study">Study</a>
+        <a href="?room=<?php echo $room; ?>"><?php echo $room; ?></a>
       </div>
-      <div class="room">
-        <a href="?room=Hall">Hall</a>
-      </div>
-      <div class="room">
-        <a href="?room=Lounge">Lounge</a>
-      </div>
-      <div class="room">
-        <a href="?room=Library">Library</a>
-      </div>
-      <div class="room">
-        <a href="?room=Dining Room">Dining Room</a>
-      </div>
-      <div class="room">
-        <a href="?room=Billard Room">Billard Room</a>
-      </div>
-      <div class="room">
-        <a href="?room=Conservatory">Conservatory</a>
-      </div>
-      <div class="room">
-        <a href="?room=Ballroom">Ballroom</a>
-      </div>
-      <div class="room">
-        <a href="?room=Kitchen">Kitchen</a>
-      </div>
+    <?php endforeach; ?>
+
   </main>
 </body>
 </html>
